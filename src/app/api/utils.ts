@@ -26,3 +26,9 @@ export default async function createSessions(session: Session) {
     console.log(error);
   }
 }
+
+export default function getAllSessionsByUserId(id: string) {
+  try {
+    const res = await fetch(`${BASE_URL}/`)
+  }
+}
