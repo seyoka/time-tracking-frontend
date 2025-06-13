@@ -1,11 +1,8 @@
 "use client";
 import React from "react";
-
+import { createSessions } from "@/app/api/utils";
 // Optional: define your Session type inline if not imported
-type Session = {
-  title: string;
-  description: string;
-};
+import Session from "@/types/session";
 
 function StartStopButton({ buttonState }: { buttonState: boolean }) {
   return (
@@ -29,6 +26,19 @@ export default function InputForm() {
   const handleOnSubmit = (e: React.FormEvent) => {
     console.log("Session Data:", sessionData);
     setButtonState(!buttonState);
+    const sessionToCreate: Session = {
+      ...sessionData,
+      start_time: new Date(),
+      end_time: new Date(),
+      tag: "",
+    }
+
+    try {
+      console.log("Attempting to create Session", sessionData)
+      createSessions(sessionToCreate)
+    } catch (error) {
+      throw new Error(`Error on creating a session ${error}`)
+    }
   };
 
   const handleTitleInput = (e: React.ChangeEvent<HTMLInputElement>) => {

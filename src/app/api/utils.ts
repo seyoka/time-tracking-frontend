@@ -1,7 +1,6 @@
 import Session from "@/types/session";
 
-const BASE_URL = process.env.BASE_URL;
-
+const BASE_URL = "http://localhost:3000/api"
 if (!BASE_URL) {
   console.log("Base url not found ")
   throw new Error("Base Url not found ")
@@ -9,7 +8,7 @@ if (!BASE_URL) {
 
 
 
-export default async function createSessions(session: Session) {
+async function createSessions(session: Session) {
   try {
     const res = await fetch(`${BASE_URL}/session`, {
       method: "POST",
@@ -27,8 +26,19 @@ export default async function createSessions(session: Session) {
   }
 }
 
-export default function getAllSessionsByUserId(id: string) {
+async function getAllSessionsByUserId(id: string) {
+
   try {
-    const res = await fetch(`${BASE_URL}/`)
+    const res = await fetch(`${BASE_URL}/sessions/${id}`,
+      {
+        method: "GET",
+      }
+    );
+
+    return res;
+  } catch (error) {
+    console.log(error);
   }
 }
+
+export { getAllSessionsByUserId, createSessions };  
