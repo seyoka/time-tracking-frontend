@@ -1,30 +1,19 @@
 import InputForm from "@/components/form";
 import SessionList from "@/components/session-list";
 import SessionProps from "@/types/sessionProps";
+import { formatSession, getAllSessionsByUserId } from "./api/utils";
+import Session from "@/types/session";
 
-export default function Home() {
-  const sessionList: SessionProps[] = [
-    {
-      title: "BTM work",
-      description: "Working on analytics",
-      duration: 2,
-      date: new Date()
-    },
+export default async function Home() {
+  const sessionsRaw: Session[] | undefined = await getAllSessionsByUserId("1");
+  const sessionList: SessionProps[] | undefined = formatSession(sessionsRaw);
 
-    {
-      title: "BTM work",
-      description: "Working on analytics",
-      duration: 2,
-      date: new Date()
-    },
+  console.dir(sessionsRaw)
 
-    {
-      title: "BTM work",
-      description: "Working on analytics",
-      duration: 2,
-      date: new Date()
-    },
-  ]
+  if (typeof sessionsRaw == undefined) {
+    throw new Error("Bruh fuck my life ")
+  }
+
 
   return (
     <div>

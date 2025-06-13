@@ -1,4 +1,5 @@
 import Session from "@/types/session";
+import SessionProps from "@/types/sessionProps";
 
 const BASE_URL = "http://localhost:3000/api"
 if (!BASE_URL) {
@@ -9,9 +10,15 @@ if (!BASE_URL) {
 
 
 async function createSessions(session: Session) {
+  console.log("Session from api", session)
   try {
+    console.log(JSON.stringify(session))
+
     const res = await fetch(`${BASE_URL}/session`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(session),
     });
 
@@ -35,10 +42,30 @@ async function getAllSessionsByUserId(id: string) {
       }
     );
 
-    return res;
+    const data = await res.json()
+    return data as Session[]
   } catch (error) {
     console.log(error);
   }
 }
 
-export { getAllSessionsByUserId, createSessions };  
+function formatSession(rawSessions: { session: Session | undefined }[]) {
+  const sessionList: SessionProps[] = []
+
+  if (!rawSessions || !Array.isArray(rawSessions)) {
+    return [];
+  }
+  rawSessions.forEach((session) => {
+    sessionList.push({
+      title: session.session!.title,
+      description: session.session!.description,
+      date: new Date(session.session!.start_time),
+      duration: (new Date(session.session!.end_time!).getTime() - new Date(session.session!.start_time!).getTime()) / (1000 * 60 * 60)
+    })
+  })
+
+  return sessionList;
+}
+
+
+export { getAllSessionsByUserId, createSessions, formatSession };  

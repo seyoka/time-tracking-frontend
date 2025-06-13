@@ -18,7 +18,7 @@ export default function SessionEntry({ title, description, duration, date }: Ses
         </CardHeader>
         <CardContent >
           <p>Duration: {duration} </p>
-          <p>Date: {date.toDateString()}</p>
+          <p>Date: {date?.toDateString() ?? "bruh"}</p>
         </CardContent>
       </Card>
     </div >
