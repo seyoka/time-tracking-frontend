@@ -4,6 +4,7 @@ type Session = {
   title?: string,
   description?: string,
   tag?: string
+  active?: boolean
 }
 
 export default Session;

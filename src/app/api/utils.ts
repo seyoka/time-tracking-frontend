@@ -49,6 +49,23 @@ async function getAllSessionsByUserId(id: string) {
   }
 }
 
+async function getActiveSession(id: string) {
+  try {
+    const res = await fetch(`${BASE_URL}/active-session/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json()
+    return data as Session[]
+
+  } catch (error) {
+    throw new Error("getActiveSession failed", error);
+  }
+}
+
 function formatSession(rawSessions: { session: Session | undefined }[]) {
   const sessionList: SessionProps[] = []
 
@@ -68,4 +85,5 @@ function formatSession(rawSessions: { session: Session | undefined }[]) {
 }
 
 
-export { getAllSessionsByUserId, createSessions, formatSession };  
+
+export { getAllSessionsByUserId, createSessions, formatSession, getActiveSession };  
