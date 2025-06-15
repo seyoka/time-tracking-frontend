@@ -7,7 +7,7 @@ function StartStopButton({ buttonState }: { buttonState: boolean }) {
   return (
     <button
       type="submit"
-      className={`px-6 py-2 border-2 border-black rounded-xl font-handwritten text-lg ${buttonState ? "bg-green-600" : "bg-red-600"
+      className={`px-6 py-2  ${buttonState ? "bg-green-600" : "bg-red-600"
         }`}
     >
       {buttonState ? "start" : "stop"}
@@ -56,7 +56,7 @@ export default function InputForm() {
     <div className="text-center p-8 text-black">
       <h1 className="text-4xl font-handwritten mb-6">Time tracker</h1>
       <form
-        className="bg-white p-6 rounded-3xl border-4 border-black max-w-md mx-auto space-y-4 text-left"
+        className="bg-white p-6 max-w-md mx-auto space-y-4 text-left"
         onSubmit={handleOnSubmit}
       >
         <div>

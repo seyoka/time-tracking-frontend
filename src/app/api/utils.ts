@@ -62,7 +62,8 @@ async function getActiveSession(id: string) {
     return data as Session[]
 
   } catch (error) {
-    throw new Error("getActiveSession failed", error);
+    console.log(error)
+    throw new Error("getActiveSession failed");
   }
 }
 
@@ -84,6 +85,20 @@ function formatSession(rawSessions: { session: Session | undefined }[]) {
   return sessionList;
 }
 
+function formatActiveSession(rawActiveSession: Session) {
+  if (!rawActiveSession) {
+    return []
+  }
 
 
-export { getAllSessionsByUserId, createSessions, formatSession, getActiveSession };  
+  return {
+    title: rawActiveSession.title,
+    description: rawActiveSession.description,
+    start_time: new Date(rawActiveSession.start_time),
+    date: new Date(rawActiveSession.start_time),
+    end_time: new Date(rawActiveSession.end_time),
+    elapsedTime: "0"
+  };
+}
+
+export { getAllSessionsByUserId, createSessions, formatSession, getActiveSession, formatActiveSession };  
